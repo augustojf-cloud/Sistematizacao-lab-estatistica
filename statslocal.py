@@ -198,7 +198,7 @@ def correlacao_pearson(x: Sequence[float], y: Sequence[float]) -> float:
 
 
 # ---------------------------------------------------------------------------
-# Regressão linear simples (usada no Módulo 5, mas já deixamos pronta aqui)
+# Regressão linear simples (provavelmente sera usada no Módulo 5, mas já deixamos pronta aqui)
 # ---------------------------------------------------------------------------
 
 def regressao_linear_simples(x: Sequence[float], y: Sequence[float]) -> Tuple[float, float]:
