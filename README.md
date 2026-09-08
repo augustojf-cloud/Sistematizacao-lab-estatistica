@@ -21,9 +21,9 @@ Sistematizacao-lab-estatistica/
 │   ├── SISDEPEN.xlsx                 # Dataset original
 │   └── SISDEPEN.csv                  # Dataset convertido
 ├── statslocal.py                     # Núcleo estatístico próprio (Módulo 1)
-├── montecarlo.py                     # Simulação de Monte Carlo (Módulo 2)
+├── montecarlo.py                     # Probabilidade e simulação de Monte Carlo (Módulo 3)
 ├── test_stats.py                     # Testes do Módulo 1 (validação vs NumPy/SciPy)
-├── test_montecarlo.py                # Testes do Módulo 2
+├── test_montecarlo.py                # Testes do Módulo 3
 ├── requirements.txt
 ├── .gitignore
 ├── README.md
@@ -56,8 +56,10 @@ streamlit run "Modulo 0/app.py"
 
 ## Status dos módulos
 
-- [x] Módulo 0 — Carregamento e inspeção do dataset
-- [x] Módulo 1 — Núcleo estatístico próprio (validado com testes automatizados)
-- [x] Módulo 2 — Simulação de Monte Carlo (Lei dos Grandes Números e Teorema Central do Limite)
-- [ ] Módulo 3 — Distribuições teóricas
-- [ ] Módulo 4 — Correlação e regressão linear (predição interativa)
+- [x] Módulo 0 — Dados Reais (carregamento e inspeção do dataset)
+- [x] Módulo 1 — Núcleo Estatístico Próprio (validado com testes automatizados)
+- [ ] Módulo 2 — Estatística Descritiva Interativa (tabela de frequências, gráficos, outliers/IQR, interpretação automática)
+- [x] Módulo 3 — Probabilidade e Simulação (Lei dos Grandes Números e Teorema Central do Limite)
+- [ ] Módulo 4 — Distribuições Teóricas (sobreposição de curva teórica ao histograma)
+- [ ] Módulo 5 — Correlação e Regressão Linear (predição interativa, R²)
+- [ ] Módulo 6 — Relatório de Descobertas
