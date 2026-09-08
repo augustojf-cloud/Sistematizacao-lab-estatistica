@@ -38,7 +38,8 @@ import pandas as pd
 # SISDEPEN. Ele precisa estar na mesma pasta deste script, ou você
 # deve indicar o caminho completo
 # (ex: "C:/Users/SeuNome/Downloads/sisdepen_2025.xlsx")
-CAMINHO_ARQUIVO = r"D:\Augusto\Documentos pessoais\Faculdade\Análise e desenvolvimento de sistemas - ADS\Modulo 0 - dataset\SISDEPEN.xlsx"
+CAMINHO_ARQUIVO = r"D:\Augusto\Documentos pessoais\Faculdade\Análise e desenvolvimento de sistemas - ADS\SISTEMATIZAÇÃO - LÓGICA E MAT\SISDEPEN.xlsx"
+
 
 NOME_ABA = "Sheet1"  # Nome da aba do Excel que contém os dados
 
@@ -75,6 +76,8 @@ def carregar_dataset(caminho, separador=SEPARADOR, codificacao=CODIFICACAO, aba=
         else:
             print(f"ERRO: extensão '.{extensao}' não reconhecida. Use um arquivo .csv, .xlsx ou .xls.")
             return None
+            pasta_do_script = os.path.dirname(os.path.abspath(__file__))
+            df.to_csv(os.path.join(pasta_do_script, "SISDEPEN.csv"), index=False, encoding="utf-8-sig")
 
         print(f"Dataset carregado com sucesso: {df.shape[0]} linhas e {df.shape[1]} colunas.")
         return df
@@ -150,3 +153,7 @@ if __name__ == "__main__":
         inspecionar_dataset(df)
     else:
         print("\nNão foi possível prosseguir: corrija o carregamento do arquivo antes de continuar.")
+
+# -------------------------------------------------------
+# 6. EXECUÇÃO DE ESTATÍSTICAS - MÉDIAS E MEDIANAS 
+# -------------------------------------------------------
