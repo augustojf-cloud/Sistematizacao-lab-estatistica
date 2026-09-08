@@ -10,16 +10,28 @@ mostrando o resultado numa interface web em vez de no console.
 """
 
 import os
+import sys
 
+# Permite importar montecarlo.py e statslocal.py, que ficam na pasta
+# raiz do projeto (um nivel acima de "Modulo 0/", onde este
+# arquivo esta agora).
+_PASTA_RAIZ_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _PASTA_RAIZ_PROJETO not in sys.path:
+    sys.path.insert(0, _PASTA_RAIZ_PROJETO)
+
+import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
+
+import montecarlo as mc
+from statslocal import media
 
 NOME_ABA = "Sheet1"
 SEPARADOR = ";"
 CODIFICACAO = "latin1"
 
-# O dataset já está commitado no repositório, dentro da pasta "Modulo 0/"
-PASTA_DADOS = "Modulo 0"
+# app.py agora mora dentro da pasta "Modulo 0/", junto com o dataset
+PASTA_DADOS = ""
 ARQUIVOS_LOCAIS_PADRAO = ["SISDEPEN.xlsx", "SISDEPEN.xls", "SISDEPEN.csv"]
 
 
@@ -83,6 +95,84 @@ def inspecionar_dataset(df):
         st.dataframe(ausentes.rename("qtd_ausentes"))
 
 
+def modulo2_monte_carlo(df):
+    st.header("Módulo 2 — Simulação de Monte Carlo")
+    st.markdown(
+        "Demonstração prática de dois resultados fundamentais da estatística, "
+        "usando sorteios aleatórios (com reposição) sobre uma coluna numérica "
+        "real do SISDEPEN."
+    )
+
+    colunas_numericas = df.select_dtypes(include="number").columns.tolist()
+    if len(colunas_numericas) == 0:
+        st.warning("Não há colunas numéricas no dataset para simular.")
+        return
+
+    coluna = st.selectbox("Coluna numérica a usar como população", colunas_numericas)
+    populacao = df[coluna].dropna().tolist()
+
+    if len(populacao) < 2:
+        st.warning("Essa coluna não tem dados suficientes para simular.")
+        return
+
+    media_real = media(populacao)
+    st.metric(f"Média real de '{coluna}' (população completa, n={len(populacao)})", f"{media_real:.4f}")
+
+    semente = st.number_input(
+        "Semente aleatória (mesma semente = mesmo resultado, útil para reproduzir)",
+        min_value=0, value=42, step=1,
+    )
+
+    # ------------------------------------------------------------------
+    # Lei dos Grandes Números
+    # ------------------------------------------------------------------
+    st.subheader("2.1 Lei dos Grandes Números")
+    st.caption(
+        "Conforme aumentamos o número de sorteios, a média acumulada dos "
+        "valores sorteados converge para a média real da população (linha "
+        "tracejada vermelha)."
+    )
+    n_sorteios = st.slider("Número de sorteios", min_value=10, max_value=5000, value=1000, step=10)
+
+    medias_acumuladas = mc.lei_dos_grandes_numeros(populacao, n_sorteios, semente=int(semente))
+
+    fig1, ax1 = plt.subplots()
+    ax1.plot(range(1, n_sorteios + 1), medias_acumuladas, linewidth=1)
+    ax1.axhline(media_real, color="red", linestyle="--", label=f"Média real = {media_real:.2f}")
+    ax1.set_xlabel("Número de sorteios")
+    ax1.set_ylabel("Média acumulada")
+    ax1.set_title("Lei dos Grandes Números")
+    ax1.legend()
+    st.pyplot(fig1)
+
+    # ------------------------------------------------------------------
+    # Teorema Central do Limite
+    # ------------------------------------------------------------------
+    st.subheader("2.2 Teorema Central do Limite")
+    st.caption(
+        "Sorteamos várias amostras (todas do mesmo tamanho) e calculamos a "
+        "média de cada uma. O histograma dessas médias tende a um formato "
+        "de sino (distribuição normal), mesmo que a coluna original não "
+        "tenha esse formato."
+    )
+    col_a, col_b = st.columns(2)
+    tamanho_amostra = col_a.slider("Tamanho de cada amostra", min_value=2, max_value=200, value=30, step=1)
+    n_simulacoes = col_b.slider("Número de amostras simuladas", min_value=100, max_value=5000, value=1000, step=100)
+
+    medias_das_amostras = mc.teorema_central_limite(
+        populacao, tamanho_amostra, n_simulacoes, semente=int(semente)
+    )
+
+    fig2, ax2 = plt.subplots()
+    ax2.hist(medias_das_amostras, bins=40, edgecolor="black")
+    ax2.axvline(media_real, color="red", linestyle="--", label=f"Média real = {media_real:.2f}")
+    ax2.set_xlabel("Média da amostra")
+    ax2.set_ylabel("Frequência")
+    ax2.set_title(f"Distribuição das médias amostrais (n={tamanho_amostra} por amostra)")
+    ax2.legend()
+    st.pyplot(fig2)
+
+
 def main():
     st.set_page_config(page_title="SISTEMATIZAÇÃO - Laboratório de Estatística", layout="wide")
     st.title("SISTEMATIZAÇÃO — Laboratório de Estatística em Python")
@@ -101,7 +191,7 @@ def main():
 
     df = None
     if caminho_local is not None:
-        st.success(f"Dataset local encontrado: {PASTA_DADOS}/{os.path.basename(caminho_local)}")
+        st.success(f"Dataset local encontrado: {os.path.basename(caminho_local)}")
         df = carregar_dataset(caminho_local, os.path.basename(caminho_local))
 
     arquivo_enviado = st.file_uploader(
@@ -112,10 +202,12 @@ def main():
 
     if df is not None:
         inspecionar_dataset(df)
+        st.divider()
+        modulo2_monte_carlo(df)
     else:
         st.warning(
-            f"Nenhum dataset carregado ainda. Verifique se o arquivo SISDEPEN está dentro "
-            f"da pasta '{PASTA_DADOS}/', ou envie um arquivo pelo campo acima."
+            "Nenhum dataset carregado ainda. Verifique se o arquivo SISDEPEN está na mesma "
+            "pasta deste app.py (Modulo 0/), ou envie um arquivo pelo campo acima."
         )
 
 
