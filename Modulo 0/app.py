@@ -95,8 +95,8 @@ def inspecionar_dataset(df):
         st.dataframe(ausentes.rename("qtd_ausentes"))
 
 
-def modulo2_monte_carlo(df):
-    st.header("Módulo 2 — Simulação de Monte Carlo")
+def modulo3_monte_carlo(df):
+    st.header("Módulo 3 — Probabilidade e Simulação (Monte Carlo)")
     st.markdown(
         "Demonstração prática de dois resultados fundamentais da estatística, "
         "usando sorteios aleatórios (com reposição) sobre uma coluna numérica "
@@ -126,7 +126,7 @@ def modulo2_monte_carlo(df):
     # ------------------------------------------------------------------
     # Lei dos Grandes Números
     # ------------------------------------------------------------------
-    st.subheader("2.1 Lei dos Grandes Números")
+    st.subheader("3.1 Lei dos Grandes Números")
     st.caption(
         "Conforme aumentamos o número de sorteios, a média acumulada dos "
         "valores sorteados converge para a média real da população (linha "
@@ -148,7 +148,7 @@ def modulo2_monte_carlo(df):
     # ------------------------------------------------------------------
     # Teorema Central do Limite
     # ------------------------------------------------------------------
-    st.subheader("2.2 Teorema Central do Limite")
+    st.subheader("3.2 Teorema Central do Limite")
     st.caption(
         "Sorteamos várias amostras (todas do mesmo tamanho) e calculamos a "
         "média de cada uma. O histograma dessas médias tende a um formato "
@@ -203,7 +203,7 @@ def main():
     if df is not None:
         inspecionar_dataset(df)
         st.divider()
-        modulo2_monte_carlo(df)
+        modulo3_monte_carlo(df)
     else:
         st.warning(
             "Nenhum dataset carregado ainda. Verifique se o arquivo SISDEPEN está na mesma "
