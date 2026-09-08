@@ -1,13 +1,68 @@
-'''python import matplotlib.pyplot as plt
-import statslocal.py as ms from modulo0_dataset - rodando.py
-import carregar_dataset
+# SERÁ REALIZADO O RAIO-X DO DATASET, COM UMA ANÁLISE GRÁFICAE E ESTATÍSTICA LEVANDO EM CONTA O MÓDULO0 E MÓDULO1.
+# OS CÓDIGOS SERÃO ORGANIZADOS EM FUNÇÕES, PARA QUE POSSAM SER REUTILIZADOS EM OUTROS MÓDULOS.
+# A BRANCH GRÁFICOS É RESPONSÁVEL PELA ANÁLISE GRÁFICA, ENQUANTO A BRANCH ESTATÍSTICA É RESPONSÁVEL PELA ANÁLISE ESTATÍSTICA, PORÉM A BRANCH GRÁFICOS LEVA EM CONTA TODOS OS DADOS ESTATÍSTICOS DA BRANCH ANTERIOR.
+
+'''python'''
+import matplotlib
+import  matplotlib.pyplot as plt
+import statslocal as ms 
+from modulo0_dataset import carregar_dataset, CAMINHO_ARQUIVO
+from Modulo2_graficos import grafico_macro_categorias, graficos_subcategorias # Chama os módulos de gráficos para gerar os gráficos de análise
 
 
-python import matplotlib.pyplot as plt 
-import statslocal as ms from modulo0_dataset - rodando.py
-import carregar_dataset (CAMINHO_ARQUIVO)
+df = carregar_dataset(CAMINHO_ARQUIVO)
 
-# 1. Carrega o dataset já usado no Módulo 0 df = carregar_dataset(CAMINHO_ARQUIVO) #
-# 2. Troque 'coluna_x' e 'coluna_y' pelos nomes reais das colunas numéricas do seu dataset x = df['coluna_x'].tolist() y = df['coluna_y'].tolist() # 
-# 3. Usa as funções já validadas pelos testes a, b = ms.regressao_linear_simples(x, y) r2 = ms.r_quadrado(x, y) print(f'Reta: y = {a:.4f} + {b:.4f}x | R² = {r2:.4f}') #
-# 4. Gera o gráfico de dispersão + reta de regressão plt.scatter(x, y, label='Dados') reta_y = [a + b * xi for xi in x] plt.plot(x, reta_y, color='red', label=f'Regressão (R²={r2:.2f})') plt.xlabel('coluna_x') plt.ylabel('coluna_y') plt.legend() plt.title('Regressão Linear Simples') plt.show()#
+# 1. Carregar o dataset já usado 
+
+import pandas as pd
+
+# 2. Exporta a lista completa de colunas para um arquivo (mais fácil de consultar)
+with open('colunas_dataset.txt', 'w', encoding='utf-8') as f:
+    for i, coluna in enumerate(df.columns):
+        f.write(f"{i}: {coluna}\n")
+
+print(f"{len(df.columns)} colunas salvas em colunas_dataset.txt")
+
+# 3. Separa cada nome de coluna em categoria principal e subcategoria (quando existir o "|")
+estrutura = []
+for i, coluna in enumerate(df.columns):
+    partes = [p.strip() for p in str(coluna).split('|')]
+    estrutura.append({
+        'indice': i,
+        'categoria': partes[0],
+        'subcategoria': partes[1] if len(partes) > 1 else None,
+        'nome_completo': coluna
+    })
+
+df_colunas = pd.DataFrame(estrutura)
+df_colunas.to_excel('mapa_colunas.xlsx', index=False)
+print("Mapa de colunas salvo em mapa_colunas.xlsx — abra no Excel para filtrar por categoria.")
+
+def procurar_coluna(palavra_chave):
+    encontradas = [(i, c) for i, c in enumerate(df.columns) if palavra_chave.lower() in str(c).lower()]
+    for i, c in encontradas:
+        print(f"{i}: {c}")
+    return encontradas
+
+procurar_coluna("visita")
+
+# 4. Organiza o dataset para análise, nomeando as colunas e definindo as linhas compativeis com cada coluna real do dataset.
+
+
+
+
+
+# 5. Calcula o valor total de cada coluna e junta ao mapa de categorias
+valores_numericos = df.apply(pd.to_numeric, errors='coerce')
+totais_por_coluna = valores_numericos.sum()
+
+df_colunas['valor_total'] = df_colunas['nome_completo'].map(totais_por_coluna)
+
+# Remove colunas identificadoras (não são quantidades, e distorcem o gráfico macro)
+CATEGORIAS_IDENTIFICADORAS = ['CEP', 'Código IBGE', 'Ano']  # ajuste se notar outras assim
+df_colunas_grafico = df_colunas[~df_colunas['categoria'].isin(CATEGORIAS_IDENTIFICADORAS)]
+
+# 6. Gera os gráficos (macro por categoria e detalhamento por subcategoria)
+
+resumo_categorias = grafico_macro_categorias(df_colunas_grafico)
+graficos_subcategorias(df_colunas)  
