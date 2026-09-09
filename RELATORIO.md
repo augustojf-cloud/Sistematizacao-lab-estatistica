@@ -12,7 +12,7 @@
 *(preencher com os principais resultados: médias, medianas, desvios padrão das
 variáveis mais relevantes, e o que eles indicam sobre o sistema penitenciário)*
 
-## 3. Simulações de Monte Carlo (Módulo 2)
+## 3. Simulações de Monte Carlo (Módulo 3)
 
 *(preencher: o que a Lei dos Grandes Números e o Teorema Central do Limite
 mostraram ao serem aplicados às variáveis do SISDEPEN — por exemplo, a
