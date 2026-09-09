@@ -7,4 +7,11 @@ Modulo1 - estatistica.py
 Modulo1 - estat\303\255stica.py
 Modulo0_dataset - rodando.py
 Modulo1 - estat\303\255stica.py
-Modulo1 - estatística.py
+Modulo1 - estatï¿½stica.py
+Modulo1 - estatï¿½stica.py
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.vscode/
