@@ -1,5 +1,5 @@
 """
-Testes automatizados do Módulo 2 (simulação de Monte Carlo).
+Testes automatizados do Módulo 3 (probabilidade e simulação de Monte Carlo).
 
 Como envolve sorteios aleatórios, usamos uma "semente" (seed) fixa em
 todo teste — isso faz com que os "sorteios aleatórios" sejam sempre os
