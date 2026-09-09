@@ -1,7 +1,7 @@
 """
 ========================================================================
  SISTEMATIZAÇÃO - Laboratório de Estatística em Python
- Módulo 2: Simulação de Monte Carlo
+ Módulo 3: Probabilidade e Simulação (Monte Carlo)
 ========================================================================
 
 Este módulo demonstra, na prática, dois resultados fundamentais da
