@@ -15,19 +15,24 @@ Aplicativo em Streamlit que analisa dados reais do **SISDEPEN** (Sistema de Info
 ```
 Sistematizacao-lab-estatistica/
 ├── Modulo 0/
-│   ├── app.py                        # Aplicativo Streamlit (interface principal)
-│   ├── modulo0_dataset -.py          # Script de carregamento (versão console)
-│   ├── modulo0_dataset - rodando.py  # Script de carregamento (versão console)
-│   ├── SISDEPEN.xlsx                 # Dataset original
-│   └── SISDEPEN.csv                  # Dataset convertido
-├── statslocal.py                     # Núcleo estatístico próprio (Módulo 1)
-├── montecarlo.py                     # Probabilidade e simulação de Monte Carlo (Módulo 3)
-├── test_stats.py                     # Testes do Módulo 1 (validação vs NumPy/SciPy)
-├── test_montecarlo.py                # Testes do Módulo 3
+│   ├── app.py                # Aplicativo Streamlit (interface principal)
+│   ├── modulo0_dataset.py    # Script de carregamento do dataset (versão console)
+│   ├── SISDEPEN.xlsx         # Dataset original
+│   └── SISDEPEN.csv          # Dataset convertido
+├── graficos/                 # Gráficos gerados pela análise exploratória (.png)
+├── analise_completa.py       # Script de análise completa do dataset
+├── Modulo2_graficos.py       # Geração de gráficos (Módulo 2)
+├── modulo0_dataset.py        # Script de carregamento do dataset (cópia na raiz)
+├── colunas_dataset.txt       # Descrição/mapeamento das colunas do dataset
+├── mapa_colunas.xlsx         # Mapa de colunas do dataset
+├── statslocal.py             # Núcleo estatístico próprio (Módulo 1)
+├── montecarlo.py             # Probabilidade e simulação de Monte Carlo (Módulo 3)
+├── test_stats.py             # Testes do Módulo 1 (validação vs NumPy/SciPy)
+├── test_montecarlo.py        # Testes do Módulo 3
 ├── requirements.txt
 ├── .gitignore
 ├── README.md
-└── RELATORIO.md                      # Relatório de achados/conclusões
+└── RELATORIO.md              # Relatório de achados/conclusões
 ```
 
 ## Como rodar
