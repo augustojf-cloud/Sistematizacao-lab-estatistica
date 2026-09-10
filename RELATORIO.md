@@ -18,11 +18,11 @@ variáveis mais relevantes, e o que eles indicam sobre o sistema penitenciário)
 mostraram ao serem aplicados às variáveis do SISDEPEN — por exemplo, a
 população prisional total por unidade)*
 
-## 4. Distribuições teóricas (Módulo 3)
+## 4. Distribuições teóricas (Módulo 4)
 
 *(preencher: quais distribuições melhor se ajustam às variáveis analisadas)*
 
-## 5. Correlação e regressão (Módulo 4)
+## 5. Correlação e regressão (Módulo 5)
 
 *(preencher: variáveis correlacionadas, modelo de regressão, R² obtido)*
 
