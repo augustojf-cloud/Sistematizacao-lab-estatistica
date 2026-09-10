@@ -29,6 +29,7 @@ vão reutilizar o DataFrame que este módulo carrega e valida aqui.
 # em formato de tabela (linhas e colunas). Chamamos ela de "pd" só
 # para não precisar digitar "pandas" toda vez.
 import pandas as pd
+import os
 
 
 # ------------------------------------------------------------------
@@ -38,7 +39,7 @@ import pandas as pd
 # SISDEPEN. Ele precisa estar na mesma pasta deste script, ou você
 # deve indicar o caminho completo
 # (ex: "C:/Users/SeuNome/Downloads/sisdepen_2025.xlsx")
-CAMINHO_ARQUIVO = r"D:\Augusto\Documentos pessoais\Faculdade\Análise e desenvolvimento de sistemas - ADS\SISTEMATIZAÇÃO - LÓGICA E MAT\SISDEPEN.xlsx"
+CAMINHO_ARQUIVO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Modulo 0", "SISDEPEN.xlsx")
 
 
 NOME_ABA = "Sheet1"  # Nome da aba do Excel que contém os dados
@@ -76,8 +77,8 @@ def carregar_dataset(caminho, separador=SEPARADOR, codificacao=CODIFICACAO, aba=
         else:
             print(f"ERRO: extensão '.{extensao}' não reconhecida. Use um arquivo .csv, .xlsx ou .xls.")
             return None
-            pasta_do_script = os.path.dirname(os.path.abspath(__file__))
-            df.to_csv(os.path.join(pasta_do_script, "SISDEPEN.csv"), index=False, encoding="utf-8-sig")
+        pasta_do_script = os.path.dirname(os.path.abspath(__file__))
+        df.to_csv(os.path.join(pasta_do_script, "SISDEPEN.csv"), index=False, encoding="utf-8-sig")
 
         print(f"Dataset carregado com sucesso: {df.shape[0]} linhas e {df.shape[1]} colunas.")
         return df
