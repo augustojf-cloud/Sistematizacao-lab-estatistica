@@ -2,6 +2,7 @@
 Biblioteca estatística  (Módulo 1)
 """
 
+import math
 from typing import List, Sequence, Tuple
 
 
@@ -232,3 +233,41 @@ def r_quadrado(x: Sequence[float], y: Sequence[float]) -> float:
     """R² da regressão linear simples: quadrado do coeficiente de Pearson."""
     r = correlacao_pearson(x, y)
     return r ** 2
+
+
+# ---------------------------------------------------------------------------
+# Distribuições teóricas (Módulo 4)
+# ---------------------------------------------------------------------------
+
+def densidade_normal(x: float, media_dados: float, desvio_padrao_dados: float) -> float:
+    """
+    Densidade de probabilidade da distribuição Normal (Gaussiana) no ponto x,
+    pela fórmula fechada -- não usa scipy.stats.norm:
+
+        f(x) = (1 / (sigma * sqrt(2*pi))) * exp(-(x - mu)^2 / (2 * sigma^2))
+    """
+    if desvio_padrao_dados <= 0:
+        raise ValueError("O desvio padrão deve ser maior que zero.")
+    expoente = -((x - media_dados) ** 2) / (2 * desvio_padrao_dados ** 2)
+    return (1.0 / (desvio_padrao_dados * math.sqrt(2 * math.pi))) * math.exp(expoente)
+
+
+def densidade_uniforme(x: float, minimo: float, maximo: float) -> float:
+    """Densidade de probabilidade da distribuição Uniforme contínua em [minimo, maximo]."""
+    if maximo <= minimo:
+        raise ValueError("O máximo deve ser maior que o mínimo.")
+    if minimo <= x <= maximo:
+        return 1.0 / (maximo - minimo)
+    return 0.0
+
+
+def densidade_exponencial(x: float, taxa: float) -> float:
+    """
+    Densidade de probabilidade da distribuição Exponencial com parâmetro de
+    taxa (lambda). Definida para x >= 0; fora disso a densidade é zero.
+    """
+    if taxa <= 0:
+        raise ValueError("A taxa (lambda) deve ser maior que zero.")
+    if x < 0:
+        return 0.0
+    return taxa * math.exp(-taxa * x)

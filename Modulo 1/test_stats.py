@@ -110,3 +110,25 @@ def test_r_quadrado():
 def test_lista_vazia_levanta_erro():
     with pytest.raises(ValueError):
         ms.media([])
+
+
+def test_densidade_normal():
+    m = ms.media(DADOS)
+    dp = ms.desvio_padrao(DADOS, amostral=True)
+    for x in [0, 5, 10, 15, 20]:
+        esperado = sp_stats.norm.pdf(x, loc=m, scale=dp)
+        assert ms.densidade_normal(x, m, dp) == pytest.approx(esperado, abs=TOL)
+
+
+def test_densidade_uniforme():
+    minimo, maximo = min(DADOS), max(DADOS)
+    for x in [minimo - 1, minimo, (minimo + maximo) / 2, maximo, maximo + 1]:
+        esperado = sp_stats.uniform.pdf(x, loc=minimo, scale=maximo - minimo)
+        assert ms.densidade_uniforme(x, minimo, maximo) == pytest.approx(esperado, abs=TOL)
+
+
+def test_densidade_exponencial():
+    taxa = 1 / ms.media(DADOS)
+    for x in [-1, 0, 5, 10, 20]:
+        esperado = sp_stats.expon.pdf(x, scale=1 / taxa)
+        assert ms.densidade_exponencial(x, taxa) == pytest.approx(esperado, abs=TOL)
