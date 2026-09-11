@@ -19,7 +19,8 @@ _PASTA_RAIZ_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__))
 _PASTA_MODULO1 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 1")
 _PASTA_MODULO2 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 2")
 _PASTA_MODULO3 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 3")
-for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1, _PASTA_MODULO2, _PASTA_MODULO3):
+_PASTA_MODULO4 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 4")
+for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1, _PASTA_MODULO2, _PASTA_MODULO3, _PASTA_MODULO4):
     if _pasta not in sys.path:
         sys.path.insert(0, _pasta)
 
@@ -30,6 +31,7 @@ import streamlit as st
 import montecarlo as mc
 from statslocal import media
 from modulo2_estatistica_interativa import modulo2_estatistica_interativa
+from modulo4_distribuicoes_teoricas import modulo4_distribuicoes_teoricas
 
 NOME_ABA = "Sheet1"
 SEPARADOR = ";"
@@ -211,6 +213,8 @@ def main():
         modulo2_estatistica_interativa(df)
         st.divider()
         modulo3_monte_carlo(df)
+        st.divider()
+        modulo4_distribuicoes_teoricas(df)
     else:
         st.warning(
             "Nenhum dataset carregado ainda. Verifique se o arquivo SISDEPEN está na mesma "
