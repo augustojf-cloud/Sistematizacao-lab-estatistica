@@ -17,8 +17,9 @@ import sys
 # arquivo esta agora).
 _PASTA_RAIZ_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _PASTA_MODULO1 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 1")
+_PASTA_MODULO2 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 2")
 _PASTA_MODULO3 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 3")
-for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1, _PASTA_MODULO3):
+for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1, _PASTA_MODULO2, _PASTA_MODULO3):
     if _pasta not in sys.path:
         sys.path.insert(0, _pasta)
 
@@ -28,6 +29,7 @@ import streamlit as st
 
 import montecarlo as mc
 from statslocal import media
+from modulo2_estatistica_interativa import modulo2_estatistica_interativa
 
 NOME_ABA = "Sheet1"
 SEPARADOR = ";"
@@ -205,6 +207,8 @@ def main():
 
     if df is not None:
         inspecionar_dataset(df)
+        st.divider()
+        modulo2_estatistica_interativa(df)
         st.divider()
         modulo3_monte_carlo(df)
     else:
