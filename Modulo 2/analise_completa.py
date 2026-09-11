@@ -7,9 +7,11 @@ import matplotlib
 import  matplotlib.pyplot as plt
 import os
 import sys
-_PASTA_MODULO1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Modulo 1")
-if _PASTA_MODULO1 not in sys.path:
-    sys.path.insert(0, _PASTA_MODULO1)
+_PASTA_RAIZ_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_PASTA_MODULO1 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 1")
+for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1):
+    if _pasta not in sys.path:
+        sys.path.insert(0, _pasta)
 import statslocal as ms
 from modulo0_dataset import carregar_dataset, CAMINHO_ARQUIVO
 from Modulo2_graficos import grafico_macro_categorias, graficos_subcategorias # Chama os módulos de gráficos para gerar os gráficos de análise
@@ -22,7 +24,8 @@ df = carregar_dataset(CAMINHO_ARQUIVO)
 import pandas as pd
 
 # 2. Exporta a lista completa de colunas para um arquivo (mais fácil de consultar)
-with open('colunas_dataset.txt', 'w', encoding='utf-8') as f:
+_CAMINHO_COLUNAS_DATASET = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'colunas_dataset.txt')
+with open(_CAMINHO_COLUNAS_DATASET, 'w', encoding='utf-8') as f:
     for i, coluna in enumerate(df.columns):
         f.write(f"{i}: {coluna}\n")
 
@@ -40,7 +43,8 @@ for i, coluna in enumerate(df.columns):
     })
 
 df_colunas = pd.DataFrame(estrutura)
-df_colunas.to_excel('mapa_colunas.xlsx', index=False)
+_CAMINHO_MAPA_COLUNAS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'mapa_colunas.xlsx')
+df_colunas.to_excel(_CAMINHO_MAPA_COLUNAS, index=False)
 print("Mapa de colunas salvo em mapa_colunas.xlsx — abra no Excel para filtrar por categoria.")
 
 def procurar_coluna(palavra_chave):

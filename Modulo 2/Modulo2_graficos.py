@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import os
 import re
 
-PASTA_GRAFICOS = 'graficos'
+PASTA_GRAFICOS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'graficos')
 
 def nome_arquivo_seguro(texto, max_len=50):
     """Remove caracteres inválidos para nome de arquivo no Windows."""
