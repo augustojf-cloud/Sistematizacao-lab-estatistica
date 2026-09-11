@@ -17,7 +17,8 @@ import sys
 # arquivo esta agora).
 _PASTA_RAIZ_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _PASTA_MODULO1 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 1")
-for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1):
+_PASTA_MODULO3 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 3")
+for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1, _PASTA_MODULO3):
     if _pasta not in sys.path:
         sys.path.insert(0, _pasta)
 
