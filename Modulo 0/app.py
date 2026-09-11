@@ -16,8 +16,10 @@ import sys
 # raiz do projeto (um nivel acima de "Modulo 0/", onde este
 # arquivo esta agora).
 _PASTA_RAIZ_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _PASTA_RAIZ_PROJETO not in sys.path:
-    sys.path.insert(0, _PASTA_RAIZ_PROJETO)
+_PASTA_MODULO1 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 1")
+for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1):
+    if _pasta not in sys.path:
+        sys.path.insert(0, _pasta)
 
 import matplotlib.pyplot as plt
 import pandas as pd

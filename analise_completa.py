@@ -5,7 +5,12 @@
 '''python'''
 import matplotlib
 import  matplotlib.pyplot as plt
-import statslocal as ms 
+import os
+import sys
+_PASTA_MODULO1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Modulo 1")
+if _PASTA_MODULO1 not in sys.path:
+    sys.path.insert(0, _PASTA_MODULO1)
+import statslocal as ms
 from modulo0_dataset import carregar_dataset, CAMINHO_ARQUIVO
 from Modulo2_graficos import grafico_macro_categorias, graficos_subcategorias # Chama os módulos de gráficos para gerar os gráficos de análise
 

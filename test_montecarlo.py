@@ -19,6 +19,11 @@ Rodar com:
 import pytest
 
 import montecarlo as mc
+import os
+import sys
+_PASTA_MODULO1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Modulo 1")
+if _PASTA_MODULO1 not in sys.path:
+    sys.path.insert(0, _PASTA_MODULO1)
 from statslocal import media, variancia, desvio_padrao
 
 # População sintética conhecida: números de 1 a 100.
