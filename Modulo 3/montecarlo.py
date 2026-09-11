@@ -29,7 +29,7 @@ import random
 
 import os
 import sys
-_PASTA_MODULO1 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Modulo 1")
+_PASTA_MODULO1 = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Modulo 1")
 if _PASTA_MODULO1 not in sys.path:
     sys.path.insert(0, _PASTA_MODULO1)
 from statslocal import media
