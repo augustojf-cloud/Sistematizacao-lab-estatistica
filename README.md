@@ -30,6 +30,8 @@ Sistematizacao-lab-estatistica/
 ├── Modulo 3/
 │   ├── montecarlo.py         # Probabilidade e simulação de Monte Carlo
 │   └── test_montecarlo.py    # Testes do Módulo 3
+├── Modulo 4/                 # Distribuições Teóricas (ainda não implementado)
+├── Modulo 5/                 # Correlação e Regressão Linear (parcial — falta integrar na interface)
 ├── Modulo 6/
 │   └── RELATORIO.md          # Relatório de achados/conclusões
 ├── graficos/                 # Gráficos gerados pela análise exploratória (.png)
