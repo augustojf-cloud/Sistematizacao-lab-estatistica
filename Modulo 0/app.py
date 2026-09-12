@@ -20,7 +20,8 @@ _PASTA_MODULO1 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 1")
 _PASTA_MODULO2 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 2")
 _PASTA_MODULO3 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 3")
 _PASTA_MODULO4 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 4")
-for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1, _PASTA_MODULO2, _PASTA_MODULO3, _PASTA_MODULO4):
+_PASTA_MODULO5 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 5")
+for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1, _PASTA_MODULO2, _PASTA_MODULO3, _PASTA_MODULO4, _PASTA_MODULO5):
     if _pasta not in sys.path:
         sys.path.insert(0, _pasta)
 
@@ -28,10 +29,15 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 
+import sys
+sys.path.append("../Modulo 5")  
+
+
 import montecarlo as mc
 from statslocal import media
 from modulo2_estatistica_interativa import modulo2_estatistica_interativa
 from modulo4_distribuicoes_teoricas import modulo4_distribuicoes_teoricas
+from regressao import render_modulo5
 
 NOME_ABA = "Sheet1"
 SEPARADOR = ";"
@@ -215,6 +221,8 @@ def main():
         modulo3_monte_carlo(df)
         st.divider()
         modulo4_distribuicoes_teoricas(df)
+        st.divider()
+        render_modulo5(df)
     else:
         st.warning(
             "Nenhum dataset carregado ainda. Verifique se o arquivo SISDEPEN está na mesma "
