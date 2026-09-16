@@ -8,8 +8,9 @@ import  matplotlib.pyplot as plt
 import os
 import sys
 _PASTA_RAIZ_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_PASTA_MODULO0 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 0")
 _PASTA_MODULO1 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 1")
-for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO1):
+for _pasta in (_PASTA_RAIZ_PROJETO, _PASTA_MODULO0, _PASTA_MODULO1):
     if _pasta not in sys.path:
         sys.path.insert(0, _pasta)
 import statslocal as ms
