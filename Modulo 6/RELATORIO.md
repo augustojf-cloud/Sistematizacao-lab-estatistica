@@ -37,7 +37,12 @@ Isso é esperado: ambas as variáveis são identificadores geográficos, não in
 
 
 
-## 8. Conclusões
+## 8. Resultado de validação estatística
+
+
+
+
+## 9. Conclusões
 
 O dataset SISDEPEN (1532 estabelecimentos, 1737 colunas) permitiu aplicar de ponta a ponta os fundamentos de estatística descritiva, probabilidade, inferência (Monte Carlo, TCL) e regressão linear sobre dados reais do sistema penitenciário brasileiro. Os principais achados foram:
 

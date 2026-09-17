@@ -4,11 +4,13 @@ Trabalho da disciplina **Matemática e Estatística para Computação** (ADS - U
 
 ## Equipe
 
-- (preencher nomes e matrículas)
+- Arthur Silas de Oliveira Costa, RA: 72601770; Augusto de Jesus Fernandes, RA:  72650179; Mateus Carvalho da Silva Vergara, RA: 72650578; Lucas Xavier Correa Rodrigues, RA: 72650473
 
 ## Sobre o projeto
 
-Aplicativo em Streamlit que analisa dados reais do **SISDEPEN** (Sistema de Informações do Departamento Penitenciário Nacional), implementando do zero — sem usar funções prontas de estatística de nenhuma biblioteca (numpy, pandas, statistics) — as principais medidas estatísticas, simulações de Monte Carlo, ajuste de distribuições e regressão linear.
+Aplicativo em Streamlit que analisa dados reais do **SISDEPEN** (Sistema de Informações do Departamento Penitenciário Nacional), implementando do zero — fazendo teste de validade comparativa com sistemas oficiais, mas sem copiá-las, somente validando os testes (numpy, pandas, statistics) — e trazendo as principais medidas estatísticas, simulações de Monte Carlo, ajuste de distribuições e regressão linear.
+
+O trabalho traz dados que correlacionam a base de dados do sistema penitenciário nacional em percentuais e análises estatísticas correlacionadas por região.
 
 ## Estrutura do projeto
 
@@ -32,8 +34,7 @@ Sistematizacao-lab-estatistica/
 │   └── test_montecarlo.py    # Testes do Módulo 3
 ├── Modulo 4/
 │   └── modulo4_distribuicoes_teoricas.py   # Sobreposição de curva teórica (Normal/Uniforme/Exponencial) ao histograma
-├── Modulo 5/
-│   └── regressao.py           # Correlação e regressão linear (dispersão, R², predição interativa)
+├── Modulo 5/                 # Correlação e Regressão Linear (parcial — falta integrar na interface)
 ├── Modulo 6/
 │   └── RELATORIO.md          # Relatório de achados/conclusões
 ├── graficos/                 # Gráficos gerados pela análise exploratória (.png)
@@ -75,4 +76,4 @@ streamlit run "Modulo 0/app.py"
 - [x] Módulo 3 — Probabilidade e Simulação (Lei dos Grandes Números e Teorema Central do Limite)
 - [x] Módulo 4 — Distribuições Teóricas (sobreposição de curva teórica ao histograma -- Normal, Uniforme, Exponencial)
 - [x] Módulo 5 — Correlação e Regressão Linear (predição interativa, R²)
-- [ ] Módulo 6 — Relatório de Descobertas
+- [x] Módulo 6 — Relatório de Descobertas
