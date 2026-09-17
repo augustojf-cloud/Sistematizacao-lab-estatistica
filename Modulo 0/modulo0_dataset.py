@@ -38,7 +38,7 @@ import os  # Biblioteca de aminhos de arquivos e pastas
 # SISDEPEN. Ele precisa estar na mesma pasta deste script, ou você
 # deve indicar o caminho completo
 # (ex: "C:/Users/SeuNome/Downloads/sisdepen_2025.xlsx")
-CAMINHO_ARQUIVO = r"D:\Augusto\Documentos pessoais\Faculdade\Análise e desenvolvimento de sistemas - ADS\SISTEMATIZAÇÃO - LÓGICA E MAT\Modulo 0\SISDEPEN.xlsx"
+CAMINHO_ARQUIVO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "SISDEPEN.xlsx") #corrige o caminho do protótipo que usava arquivos pessoais para ajuste do repositório guardando e buscando o arquivo em qualquer máquina#
 
 
 NOME_ABA = "Sheet1"  # Nome da aba do Excel que contém os dados
