@@ -32,7 +32,8 @@ Sistematizacao-lab-estatistica/
 │   └── test_montecarlo.py    # Testes do Módulo 3
 ├── Modulo 4/
 │   └── modulo4_distribuicoes_teoricas.py   # Sobreposição de curva teórica (Normal/Uniforme/Exponencial) ao histograma
-├── Modulo 5/                 # Correlação e Regressão Linear (parcial — falta integrar na interface)
+├── Modulo 5/
+│   └── regressao.py           # Correlação e regressão linear (dispersão, R², predição interativa)
 ├── Modulo 6/
 │   └── RELATORIO.md          # Relatório de achados/conclusões
 ├── graficos/                 # Gráficos gerados pela análise exploratória (.png)
@@ -73,5 +74,5 @@ streamlit run "Modulo 0/app.py"
 - [x] Módulo 2 — Estatística Descritiva Interativa (tabela de frequências, gráficos, outliers/IQR, interpretação automática)
 - [x] Módulo 3 — Probabilidade e Simulação (Lei dos Grandes Números e Teorema Central do Limite)
 - [x] Módulo 4 — Distribuições Teóricas (sobreposição de curva teórica ao histograma -- Normal, Uniforme, Exponencial)
-- [ ] Módulo 5 — Correlação e Regressão Linear (predição interativa, R²)
+- [x] Módulo 5 — Correlação e Regressão Linear (predição interativa, R²)
 - [ ] Módulo 6 — Relatório de Descobertas

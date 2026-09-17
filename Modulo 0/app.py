@@ -29,10 +29,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 
-import sys
-sys.path.append("../Modulo 5")  
-
-
 import montecarlo as mc
 from statslocal import media
 from modulo2_estatistica_interativa import modulo2_estatistica_interativa
