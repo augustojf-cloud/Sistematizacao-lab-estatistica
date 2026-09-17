@@ -72,7 +72,7 @@ def carregar_dataset(caminho, separador=SEPARADOR, codificacao=CODIFICACAO, aba=
             # pode ter várias abas — por isso o parâmetro sheet_name.
             df = pd.read_excel(caminho, sheet_name=aba)
         elif extensao == "csv":
-            df = pd.read_csv(caminho, sep=separador, encoding=codificacao)
+            df = pd.read_csv(caminho, sep=None, engine="python", encoding="utf-8-sig") #feito ajuste para buscar o caminho sem indicar arquivos soltos na pasta raiz e interligar dos módulos#
         else:
             print(f"ERRO: extensão '.{extensao}' não reconhecida. Use um arquivo .csv, .xlsx ou .xls.")
             return None

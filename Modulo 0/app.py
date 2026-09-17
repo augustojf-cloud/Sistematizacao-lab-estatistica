@@ -51,10 +51,10 @@ ARQUIVOS_LOCAIS_PADRAO = ["SISDEPEN.xlsx", "SISDEPEN.xls", "SISDEPEN.csv"]
 def carregar_dataset(origem, nome_arquivo, separador=SEPARADOR, codificacao=CODIFICACAO, aba=NOME_ABA):
     extensao = nome_arquivo.lower().split(".")[-1]
     try:
-        if extensao in ("xlsx", "xls"):
+        if extensao in ("xlsx", "xls"): 
             df = pd.read_excel(origem, sheet_name=aba)
         elif extensao == "csv":
-            df = pd.read_csv(origem, sep=separador, encoding=codificacao)
+            df = pd.read_csv(origem, sep=None, engine="python", encoding="utf-8-sig") #feito ajuste para buscar o caminho sem indicar arquivos soltos na pasta raiz e interligar dos módulos#
         else:
             st.error(f"Formato de arquivo não suportado: .{extensao}")
             return None
