@@ -6,6 +6,14 @@ Trabalho da disciplina **Matemática e Estatística para Computação** (ADS - U
 
 - Arthur Silas de Oliveira Costa, RA: 72601770; Augusto de Jesus Fernandes, RA:  72650179; Mateus Carvalho da Silva Vergara, RA: 72650578; Lucas Xavier Correa Rodrigues, RA: 72650473
 
+
+
+## Demonstração da Aplicação
+
+![Demonstração da aplicação Streamlit rodando](demo_frames/demo.gif)
+
+
+
 ## Sobre o projeto
 
 Aplicativo em Streamlit que analisa dados reais do **SISDEPEN** (Sistema de Informações do Departamento Penitenciário Nacional), implementando do zero — fazendo teste de validade comparativa com sistemas oficiais, mas sem copiá-las, somente validando os testes (numpy, pandas, statistics) — e trazendo as principais medidas estatísticas, simulações de Monte Carlo, ajuste de distribuições e regressão linear.
