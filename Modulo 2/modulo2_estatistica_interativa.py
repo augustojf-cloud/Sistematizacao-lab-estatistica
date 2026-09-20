@@ -41,7 +41,8 @@ _PASTA_RAIZ_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__))
 _PASTA_MODULO1 = os.path.join(_PASTA_RAIZ_PROJETO, "Modulo 1")
 if _PASTA_MODULO1 not in sys.path:
     sys.path.insert(0, _PASTA_MODULO1)
-from statslocal import quartis, iqr as calcular_iqr
+from statslocal import quartis, iqr as calcular_iqr, assimetria, media
+
 
 # Pasta de gráficos da RAIZ do projeto — mesma usada por analise_completa.py,
 # não uma pasta nova dentro de "Modulo 2/".
@@ -237,6 +238,107 @@ def secao_outliers_iqr(df: pd.DataFrame, coluna_valor: str) -> None:
     if not outliers.empty:
         st.dataframe(outliers[[coluna_valor]].sort_values(coluna_valor), use_container_width=True)
 
+def grafico_boxplot(df: pd.DataFrame, coluna_valor: str) -> None:
+    """Gráfico 2.5: boxplot da coluna numérica escolhida."""
+    dados = df[coluna_valor].dropna()
+    if dados.empty:
+        st.info("Não há dados válidos para montar o boxplot.")
+        return
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+    try:
+        ax.boxplot(dados, vert=False, patch_artist=True,
+                   boxprops=dict(facecolor="#4C72B0", alpha=0.6))
+        ax.set_title(f"Boxplot — {coluna_valor}")
+        ax.set_xlabel(coluna_valor)
+        fig.tight_layout()
+        st.pyplot(fig)
+
+        PASTA_GRAFICOS.mkdir(exist_ok=True)
+        destino = PASTA_GRAFICOS / f"boxplot_{nome_arquivo_seguro(coluna_valor)}.png"
+        fig.savefig(destino, dpi=150)
+        st.caption(f"Gráfico salvo em {destino}")
+    finally:
+        plt.close(fig)
+
+
+def secao_boxplot(df: pd.DataFrame, coluna_valor: str) -> None:
+    st.subheader("2.5 Boxplot")
+    grafico_boxplot(df, coluna_valor)
+
+
+def grafico_pizza_categorias(
+    df: pd.DataFrame, coluna_categoria: str, coluna_valor: str, top_n: int = 6
+) -> None:
+    """Gráfico 2.6: pizza com as top_n categorias e o restante agrupado em 'Outros'."""
+    resumo = _resumo_por_categoria(df, coluna_categoria, coluna_valor)
+    if resumo.empty:
+        st.info("Não há dados suficientes para montar o gráfico de pizza.")
+        return
+
+    principais = resumo.head(top_n)
+    restante = resumo.iloc[top_n:].sum()
+    if restante > 0:
+        principais = pd.concat([principais, pd.Series({"Outros": restante})])
+
+    fig, ax = plt.subplots(figsize=(8, 8))
+    try:
+        ax.pie(
+            principais.values,
+            labels=principais.index.astype(str),
+            autopct="%1.1f%%",
+            startangle=90,
+        )
+        ax.set_title(f"Distribuição por {coluna_categoria} (Top {top_n} + Outros)")
+        ax.axis("equal")
+        fig.tight_layout()
+        st.pyplot(fig)
+
+        PASTA_GRAFICOS.mkdir(exist_ok=True)
+        destino = PASTA_GRAFICOS / f"pizza_{nome_arquivo_seguro(coluna_categoria)}.png"
+        fig.savefig(destino, dpi=150)
+        st.caption(f"Gráfico salvo em {destino}")
+    finally:
+        plt.close(fig)
+
+
+def secao_grafico_pizza(df: pd.DataFrame, coluna_categoria: str, coluna_valor: str) -> None:
+    st.subheader("2.6 Gráfico de pizza")
+    grafico_pizza_categorias(df, coluna_categoria, coluna_valor)
+
+
+def secao_interpretacao_automatica(df: pd.DataFrame, coluna_valor: str) -> None:
+    """Gera um texto automático interpretando a forma da distribuição (assimetria)."""
+    st.subheader("2.7 Interpretação automática")
+    dados = df[coluna_valor].dropna().tolist()
+    if len(dados) < 3:
+        st.info("Poucos dados válidos para interpretar a distribuição.")
+        return
+
+    media_dados = media(dados)
+    _, mediana_dados, _ = quartis(dados)
+    coef_assimetria = assimetria(dados)
+
+    col1, col2 = st.columns(2)
+    col1.metric("Média", f"{media_dados:.2f}")
+    col2.metric("Mediana", f"{mediana_dados:.2f}")
+    st.metric("Coeficiente de assimetria", f"{coef_assimetria:.3f}")
+
+    if abs(coef_assimetria) < 0.5:
+        texto = "A distribuição é aproximadamente **simétrica** (assimetria próxima de zero)."
+    elif coef_assimetria >= 0.5:
+        texto = (
+            "A distribuição apresenta **assimetria positiva (à direita)**: a cauda direita é "
+            "mais longa e a média tende a ficar acima da mediana, geralmente puxada por "
+            "valores extremos altos."
+        )
+    else:
+        texto = (
+            "A distribuição apresenta **assimetria negativa (à esquerda)**: a cauda esquerda é "
+            "mais longa e a média tende a ficar abaixo da mediana."
+        )
+
+    st.write(texto)
 
 def modulo2_estatistica_interativa(df: pd.DataFrame) -> None:
     """Ponto de entrada do Módulo 2 -- chamado a partir do app.py (Módulo 0)."""
@@ -264,3 +366,12 @@ def modulo2_estatistica_interativa(df: pd.DataFrame) -> None:
 
     st.divider()
     secao_outliers_iqr(df, coluna_valor)
+
+    st.divider()
+    secao_boxplot(df, coluna_valor)
+
+    st.divider()
+    secao_grafico_pizza(df, coluna_categoria, coluna_valor)
+
+    st.divider()
+    secao_interpretacao_automatica(df, coluna_valor)

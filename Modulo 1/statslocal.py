@@ -271,3 +271,21 @@ def densidade_exponencial(x: float, taxa: float) -> float:
     if x < 0:
         return 0.0
     return taxa * math.exp(-taxa * x)
+
+def assimetria(dados):
+    """
+    Calcula o coeficiente de assimetria (skewness) de Fisher-Pearson, manualmente, usando o terceiro momento padronizado da amostra.
+    Equivalente ao scipy.stats.skew(dados, bias=True) -- usado apenas para VALIDAR o resultado no Modulo 6, nunca para calcula-lo.
+    """
+    n = len(dados)
+    if n < 3:
+        raise ValueError("São necessários pelo menos 3 valores para calcular a assimetria.")
+
+    media_dados = media(dados)
+    desvio = desvio_padrao(dados, amostral=False)  # desvio padrão populacional
+
+    if desvio == 0:
+        return 0.0
+
+    soma_cubos = sum((x - media_dados) ** 3 for x in dados)
+    return (soma_cubos / n) / (desvio ** 3)
