@@ -132,3 +132,13 @@ def test_densidade_exponencial():
     for x in [-1, 0, 5, 10, 20]:
         esperado = sp_stats.expon.pdf(x, scale=1 / taxa)
         assert ms.densidade_exponencial(x, taxa) == pytest.approx(esperado, abs=TOL)
+
+
+def test_assimetria():
+    esperado = sp_stats.skew(DADOS, bias=True)
+    assert ms.assimetria(DADOS) == pytest.approx(esperado, abs=TOL)
+
+
+def test_assimetria_poucos_dados_levanta_erro():
+    with pytest.raises(ValueError):
+        ms.assimetria([1, 2])

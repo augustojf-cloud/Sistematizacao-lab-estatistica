@@ -75,6 +75,14 @@ Isso é esperado: ambas as variáveis são identificadores geográficos, não in
   essas colunas são automaticamente excluídas das opções de variável no
   módulo de correlação e regressão, evitando erro de divisão por zero.
 
+- Assimetria (skewness) calculada na mão (Módulo 2): o coeficiente de
+  assimetria de Fisher-Pearson (assimetria() em statslocal.py) foi
+  implementado a partir da fórmula fechada do terceiro momento padronizado
+  da amostra, sem usar scipy.stats.skew — usado apenas para exibir o
+  boxplot, o gráfico de pizza por categoria e uma interpretação automática
+  da forma da distribuição (simétrica, assimetria positiva ou negativa) na
+  tela do Módulo 2.
+
 
 ## 8. Resultado de validação estatística
 Todas as funções do núcleo estatístico (statslocal.py) foram validadas em
@@ -84,18 +92,26 @@ cálculos exatos, como média, variância e quartis; tolerância maior, de
 1e-6, para correlação e regressão, por acumularem mais operações de ponto
 flutuante).
 
-Resultado: 17 de 17 testes automatizados passaram (100%), cobrindo:
-média, mediana, moda, amplitude, variância (amostral e populacional),
-desvio padrão (amostral e populacional), coeficiente de variação,
-percentil, quartis, IQR, covariância, correlação de Pearson, regressão
-linear simples, R², densidades de probabilidade (Normal, Uniforme,
-Exponencial) e o caso de borda de lista vazia.
+Resultado (Módulo 1 — `test_stats.py`): 22 de 22 testes automatizados
+passaram (100%), cobrindo: média, mediana, moda, amplitude, variância
+(amostral e populacional), desvio padrão (amostral e populacional),
+coeficiente de variação, percentil, quartis, IQR, covariância, correlação
+de Pearson, regressão linear simples, R², densidades de probabilidade
+(Normal, Uniforme, Exponencial), coeficiente de assimetria (usado no
+Módulo 2) e os casos de borda de lista vazia / poucos dados.
 
-*(A SER PREENCHIDO: resultado da suíte de testes do Módulo 3
-(`test_montecarlo.py`) — quantos testes passaram, e confirmação de que a
-Lei dos Grandes Números converge para a média real da população e que o
-desvio padrão das médias amostrais do Teorema Central do Limite se
-aproxima do erro padrão teórico dentro da tolerância definida no código.)*
+Resultado (Módulo 3 — `test_montecarlo.py`): 4 de 4 testes automatizados
+passaram (100%), confirmando que (1) a média acumulada dos sorteios da
+Lei dos Grandes Números converge para a média real da população conforme
+o número de sorteios cresce, (2) o primeiro valor acumulado é igual ao
+primeiro sorteio (caso de borda), (3) a média das médias amostrais do
+Teorema Central do Limite se aproxima da média real da população, e (4)
+o desvio padrão das médias amostrais se aproxima do erro padrão teórico
+(desvio padrão populacional / √n) dentro da tolerância definida no
+código.
+
+No total, a suíte automatizada do projeto (Módulos 1 e 3) tem 26 de 26
+testes passando (100%).
 
 
 
