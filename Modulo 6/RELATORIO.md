@@ -32,13 +32,9 @@ $$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
 
 Mediana (dados ordenados $x_{(1)} \le \dots \le x_{(n)}$):
 
-$$
-\tilde{x} =
-\begin{cases}
-x_{(\frac{n+1}{2})}, & n \text{ ímpar} \\
-\dfrac{x_{(n/2)} + x_{(n/2+1)}}{2}, & n \text{ par}
-\end{cases}
-$$
+$$\tilde{x} = x_{(\frac{n+1}{2})} \text{, se } n \text{ for ímpar}$$
+
+$$\tilde{x} = \dfrac{x_{(n/2)} + x_{(n/2+1)}}{2} \text{, se } n \text{ for par}$$
 
 ### Dispersão
 
@@ -99,11 +95,11 @@ $$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
 
 Densidade Uniforme contínua em $[a,b]$:
 
-$$f(x) = \begin{cases}\dfrac{1}{b-a}, & a \le x \le b \\ 0, & \text{caso contrário}\end{cases}$$
+$$f(x) = \dfrac{1}{b-a} \text{ se } a \le x \le b, \qquad f(x) = 0 \text{ caso contrário}$$
 
 Densidade Exponencial, com taxa $\lambda = 1/\bar{x}$:
 
-$$f(x) = \begin{cases}\lambda\, e^{-\lambda x}, & x \ge 0 \\ 0, & x < 0\end{cases}$$
+$$f(x) = \lambda\, e^{-\lambda x} \text{ se } x \ge 0, \qquad f(x) = 0 \text{ se } x < 0$$
 
 ### Assimetria (Módulo 2)
 
