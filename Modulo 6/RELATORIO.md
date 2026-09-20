@@ -33,12 +33,69 @@ Analisando a relação entre CEP e Código IBGE do estabelecimento, foi obtida u
 Isso é esperado: ambas as variáveis são identificadores geográficos, não indicadores substantivos do sistema prisional, então a correlação fraca apenas reflete uma leve tendência espacial entre a numeração dos CEPs e dos códigos municipais do IBGE — não uma relação de causa e efeito.
 
 ## 7. Decisões de implementação estatística 
+- Núcleo estatístico próprio (statslocal.py): todas as medidas exibidas ao
+  usuário (média, mediana, moda, variância, desvio padrão, quartis/percentis,
+  covariância, correlação de Pearson e regressão linear) foram implementadas
+  do zero, sem usar funções prontas de estatística do NumPy/SciPy/statistics.
+  NumPy/Pandas/SciPy só entram para carregar/manipular os dados e para
+  validar os resultados nos testes.
 
+- Variância e desvio padrão amostral vs. populacional: implementamos os
+  dois modos (amostral=True/False), já que o trabalho pede ambos. Por
+  padrão, as funções usam a versão amostral (divisão por n-1), por ser o caso
+  mais comum ao trabalhar com uma amostra do sistema penitenciário em vez da
+  população completa.
 
+- Quartis/percentis por interpolação linear: a função percentil()
+  usa o mesmo método de interpolação linear do numpy.percentile
+  (parâmetro padrão 'interpolation='linear'), para permitir comparação
+  direta e exata entre os dois nos testes automatizados.
+
+- Detecção de outliers pela regra do IQR: no Módulo 2, outliers são
+  identificados como valores fora do intervalo [Q1 - 1,5·IQR, Q3 + 1,5·IQR],
+  usando os quartis calculados pela nossa própria função, não por biblioteca
+  pronta.
+
+- Simulação de Monte Carlo com média incremental (Módulo 3): para a Lei
+  dos Grandes Números, em vez de recalcular a média do zero a cada novo
+  sorteio (o que seria custoso para um número grande de sorteios), usamos a
+  fórmula de atualização incremental média_nova = média_antiga +
+  (novo_valor - média_antiga) / n, matematicamente equivalente à média
+  tradicional, mas calculada progressivamente.
+
+- Distribuições teóricas calculadas por fórmula fechada (Módulo 4): as
+  densidades de probabilidade (Normal, Uniforme e Exponencial) foram
+  implementadas pelas fórmulas matemáticas fechadas de cada distribuição,
+  com os parâmetros estimados a partir dos próprios dados (ex.: média e
+  desvio padrão da amostra para a Normal), sem usar scipy.stats.
+
+- Tratamento de colunas sem variação (Módulo 5): algumas colunas do
+  SISDEPEN são constantes em todo o dataset (ex.: ano/ciclo do
+  levantamento). Como covariância/correlação exigem variação nos dados,
+  essas colunas são automaticamente excluídas das opções de variável no
+  módulo de correlação e regressão, evitando erro de divisão por zero.
 
 
 ## 8. Resultado de validação estatística
+Todas as funções do núcleo estatístico (statslocal.py) foram validadas em
+test_stats.py, comparando cada resultado próprio com a referência do
+NumPy/SciPy, dentro de uma tolerância numérica documentada (1e-9 para
+cálculos exatos, como média, variância e quartis; tolerância maior, de
+1e-6, para correlação e regressão, por acumularem mais operações de ponto
+flutuante).
 
+Resultado: 17 de 17 testes automatizados passaram (100%), cobrindo:
+média, mediana, moda, amplitude, variância (amostral e populacional),
+desvio padrão (amostral e populacional), coeficiente de variação,
+percentil, quartis, IQR, covariância, correlação de Pearson, regressão
+linear simples, R², densidades de probabilidade (Normal, Uniforme,
+Exponencial) e o caso de borda de lista vazia.
+
+*(A SER PREENCHIDO: resultado da suíte de testes do Módulo 3
+(`test_montecarlo.py`) — quantos testes passaram, e confirmação de que a
+Lei dos Grandes Números converge para a média real da população e que o
+desvio padrão das médias amostrais do Teorema Central do Limite se
+aproxima do erro padrão teórico dentro da tolerância definida no código.)*
 
 
 
