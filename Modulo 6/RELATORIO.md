@@ -15,6 +15,100 @@
 
 A escolha do dataset foi voltada para análises de dados estatísticos do sistema prisional nacional, para trazer uma perspectiva matemática da criminalística nacional, vendo por um viés de abordagem técnico-científicas para análise de aspectos ligados à políticas públicas carcerárias no sistema nacional, correlacionando o sistema prisional ao demonstrativo geográfico regional, e subsequentemente ao demonstrativo estatístico de superpopulação carcerária em razão da densidade demográfica regional.
 
+## 2.1 Fórmulas e notação matemática utilizadas
+
+Fórmulas fechadas usadas por cada função do núcleo estatístico próprio
+(`Modulo 1/statslocal.py`), do módulo de simulação (`Modulo 3/montecarlo.py`)
+e da função de assimetria (`Modulo 2`), exatamente como implementadas no
+código — nenhuma delas usa funções estatísticas prontas de bibliotecas
+externas (NumPy/Pandas/SciPy só são usados para carregar dados e, nos
+testes, para validar os resultados).
+
+### Tendência central
+
+Média aritmética:
+
+$$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$$
+
+Mediana (dados ordenados $x_{(1)} \le \dots \le x_{(n)}$):
+
+$$\tilde{x} = x_{(\frac{n+1}{2})} \text{, se } n \text{ for ímpar}$$
+
+$$\tilde{x} = \dfrac{x_{(n/2)} + x_{(n/2+1)}}{2} \text{, se } n \text{ for par}$$
+
+### Dispersão
+
+Variância populacional e amostral:
+
+$$\sigma^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^2 \qquad\qquad s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2$$
+
+Desvio padrão: $\sigma=\sqrt{\sigma^2}$ (populacional), $s=\sqrt{s^2}$ (amostral).
+
+Coeficiente de variação: $CV = \dfrac{s}{\bar{x}}$ (multiplicado por 100 para %).
+
+Percentil $p$ (interpolação linear, mesmo método do `numpy.percentile`):
+com os dados ordenados e posição contínua $h = \dfrac{p}{100}(n-1)$, $i=\lfloor h\rfloor$:
+
+$$P_p = x_{(i)} + (h-i)\big(x_{(i+1)} - x_{(i)}\big)$$
+
+Quartis: $Q_1=P_{25}$, $Q_2=P_{50}$ (mediana), $Q_3=P_{75}$.
+Intervalo interquartil: $IQR = Q_3-Q_1$.
+
+Limites de outlier (Módulo 2, regra do IQR):
+
+$$[Q_1 - 1{,}5\cdot IQR,\quad Q_3 + 1{,}5\cdot IQR]$$
+
+### Covariância, correlação e regressão (Módulos 1 e 5)
+
+Covariância amostral:
+
+$$cov(x,y) = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})$$
+
+Correlação de Pearson:
+
+$$r = \frac{cov(x,y)}{s_x \cdot s_y}$$
+
+Regressão linear simples ($y = a + bx$, mínimos quadrados):
+
+$$b = \frac{\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n (x_i-\bar{x})^2} \qquad\qquad a = \bar{y} - b\bar{x}$$
+
+Coeficiente de determinação: $R^2 = r^2$.
+
+### Probabilidade e simulação de Monte Carlo (Módulo 3)
+
+Lei dos Grandes Números — média acumulada, atualizada de forma
+incremental a cada novo sorteio $x_n$:
+
+$$\bar{x}_n = \bar{x}_{n-1} + \frac{x_n - \bar{x}_{n-1}}{n}$$
+
+Teorema Central do Limite — erro padrão teórico da distribuição das
+médias amostrais (amostras de tamanho $n$, população de desvio padrão $\sigma$):
+
+$$EP = \frac{\sigma}{\sqrt{n}}$$
+
+### Distribuições teóricas (Módulo 4)
+
+Densidade Normal, com $\mu$ (média) e $\sigma$ (desvio padrão) estimados
+a partir dos próprios dados:
+
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+
+Densidade Uniforme contínua em $[a,b]$:
+
+$$f(x) = \dfrac{1}{b-a} \text{ se } a \le x \le b, \qquad f(x) = 0 \text{ caso contrário}$$
+
+Densidade Exponencial, com taxa $\lambda = 1/\bar{x}$:
+
+$$f(x) = \lambda \cdot e^{-\lambda x} \text{ se } x \ge 0, \qquad f(x) = 0 \text{ se } x < 0$$
+
+### Assimetria (Módulo 2)
+
+Coeficiente de assimetria de Fisher-Pearson (terceiro momento
+padronizado, viés populacional):
+
+$$g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^3}{\sigma^3}$$
+
+
 ## 3. Estatísticas descritivas (Módulo 1)
 
 A capacidade dos estabelecimentos para presos provisórios apresenta grande variação entre unidades: no total (masculino + feminino), a média é de aproximadamente 90,36 vagas por estabelecimento, com desvio padrão de 204,00 (evidenciando forte heterogeneidade — de unidades pequenas a grandes complexos penitenciários). O valor máximo observado chega a 1884 vagas em um único estabelecimento. Ao decompor por sexo, a capacidade masculina (média ≈ 86,36, máx. 1884) é muito superior à feminina (média ≈ 4,54, máx. 357), refletindo a proporção da população carcerária por gênero no sistema. Poderiam ser utilizados parâmetros delimitadores mais específicos para determinar uma variância maior, passível de análise, um bom exemplo pode ser a filtragem estatística para "capacidade dos estabelecimentos e sua correlação com número de presos provisórios, com um total somatizado" poderiam trazer ilustrações gráficas mais simbólicas estatisticamente falando; porém foi escolha do grupo rodar uma análise estatística mais suscinta de um dataset que é muito robusto, com uma temática muito abrangente e pode apresentar múltiplas funcionalidades desta mesma correlação exemplificada, trazendo especificadades dependendo da necessidade do usuário da aplicação. Por tais razões a limitação para uma demonstração mais objetiva e com demonstrativos estatísticos e gráficos mais métricos foi uma escolha.
