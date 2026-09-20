@@ -35,7 +35,7 @@ Mediana (dados ordenados $x_{(1)} \le \dots \le x_{(n)}$):
 $$
 \tilde{x} =
 \begin{cases}
-x_{(\frac{n+1}{2})}, & n \text{ ímpar} \\[4pt]
+x_{(\frac{n+1}{2})}, & n \text{ ímpar} \\
 \dfrac{x_{(n/2)} + x_{(n/2+1)}}{2}, & n \text{ par}
 \end{cases}
 $$
@@ -99,11 +99,11 @@ $$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
 
 Densidade Uniforme contínua em $[a,b]$:
 
-$$f(x) = \begin{cases}\dfrac{1}{b-a}, & a \le x \le b \\[4pt] 0, & \text{caso contrário}\end{cases}$$
+$$f(x) = \begin{cases}\dfrac{1}{b-a}, & a \le x \le b \\ 0, & \text{caso contrário}\end{cases}$$
 
 Densidade Exponencial, com taxa $\lambda = 1/\bar{x}$:
 
-$$f(x) = \begin{cases}\lambda\, e^{-\lambda x}, & x \ge 0 \\[4pt] 0, & x < 0\end{cases}$$
+$$f(x) = \begin{cases}\lambda\, e^{-\lambda x}, & x \ge 0 \\ 0, & x < 0\end{cases}$$
 
 ### Assimetria (Módulo 2)
 
