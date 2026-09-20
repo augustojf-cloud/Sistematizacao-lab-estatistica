@@ -56,7 +56,7 @@ Intervalo interquartil: $IQR = Q_3-Q_1$.
 
 Limites de outlier (Módulo 2, regra do IQR):
 
-$$[\,Q_1 - 1{,}5\cdot IQR,\; Q_3 + 1{,}5\cdot IQR\,]$$
+$$[Q_1 - 1{,}5\cdot IQR,\quad Q_3 + 1{,}5\cdot IQR]$$
 
 ### Covariância, correlação e regressão (Módulos 1 e 5)
 
@@ -91,7 +91,7 @@ $$EP = \frac{\sigma}{\sqrt{n}}$$
 Densidade Normal, com $\mu$ (média) e $\sigma$ (desvio padrão) estimados
 a partir dos próprios dados:
 
-$$f(x) = \frac{1}{\sigma\sqrt{2\pi}}\, e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
 
 Densidade Uniforme contínua em $[a,b]$:
 
@@ -99,7 +99,7 @@ $$f(x) = \dfrac{1}{b-a} \text{ se } a \le x \le b, \qquad f(x) = 0 \text{ caso c
 
 Densidade Exponencial, com taxa $\lambda = 1/\bar{x}$:
 
-$$f(x) = \lambda\, e^{-\lambda x} \text{ se } x \ge 0, \qquad f(x) = 0 \text{ se } x < 0$$
+$$f(x) = \lambda \cdot e^{-\lambda x} \text{ se } x \ge 0, \qquad f(x) = 0 \text{ se } x < 0$$
 
 ### Assimetria (Módulo 2)
 
