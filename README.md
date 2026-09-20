@@ -42,9 +42,11 @@ Sistematizacao-lab-estatistica/
 │   └── test_montecarlo.py    # Testes do Módulo 3
 ├── Modulo 4/
 │   └── modulo4_distribuicoes_teoricas.py   # Sobreposição de curva teórica (Normal/Uniforme/Exponencial) ao histograma
-├── Modulo 5/                 # Correlação e Regressão Linear (parcial — falta integrar na interface)
+├── Modulo 5/
+│   └── regressao.py           # Correlação e regressão linear (dispersão, R², predição interativa)
 ├── Modulo 6/
 │   └── RELATORIO.md          # Relatório de achados/conclusões
+├── demo_frames/               # Frames e GIF de demonstração do app (README)
 ├── graficos/                 # Gráficos gerados pela análise exploratória (.png)
 ├── modulo0_dataset.py        # Script de carregamento do dataset (cópia na raiz)
 ├── requirements.txt
